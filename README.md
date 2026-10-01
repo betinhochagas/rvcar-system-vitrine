@@ -26,7 +26,7 @@ Medido no repositório em 01/10/2026:
 **Backend:** NestJS 11 · TypeScript · Prisma · PostgreSQL · BullMQ/Redis · Swagger/OpenAPI
 **Frontend:** React 19 · Vite 7 · PWA (um app instalável por portal) · Tesseract.js (OCR local)
 **Infra:** Docker · Railway (API) · Vercel (SPA) · AWS S3 · GitHub Actions · Sentry
-**Integrações:** gateway de pagamento (PIX/boleto) e assinatura eletrônica, configurados **por franquia**
+**Integrações:** gateway de pagamento (PIX/boleto) e assinatura eletrônica, configurados **por franquia** · Jira Service Management (via MCP)
 
 ## Decisões de arquitetura
 
@@ -93,7 +93,13 @@ Dois princípios valem para todos:
 | Audit | `pnpm audit` agendado |
 | backup-prod-db | Backup do banco de produção para o S3 |
 
-**5. Decisão escrita.** A IA implementa; a decisão fica registrada em ADR e é minha.
+**5. Demanda rastreável.** Os pedidos do cliente chegam por **Jira Service Management**. Cada chamado
+vira uma branch `chamado/<CHAVE>-<n>` e é citado nos commits e no pull request: são 45 chamados
+rastreados em mais de 200 commits. O **MCP do Atlassian** abre toda sessão listando os chamados abertos
+por JQL. Se o MCP estiver indisponível, o agente **avisa em vez de seguir calado**, porque silêncio
+seria indistinguível de "não há chamado nenhum".
+
+**6. Decisão escrita.** A IA implementa; a decisão fica registrada em ADR e é minha.
 
 ## Contato
 
